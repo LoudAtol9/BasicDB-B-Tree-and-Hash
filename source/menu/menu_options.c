@@ -54,7 +54,7 @@ void menu_file_options(FILE** fdb, int* tail, char** filename)
 
 void menu_function_options(FILE* file, int* tail, char* filename)
 {
-    FILE* btree_file;
+    FILE* hash_file;
     FILE* test_file;
     FILE* test_file_indicator;
 
@@ -82,9 +82,9 @@ void menu_function_options(FILE* file, int* tail, char* filename)
 
     code = (char*) malloc(sizeof(char) * 4);
 
-    btree_file = open_btree_file("../source/files/btree.ind");
-    if (btree_file == NULL)
-        btree_file = create_btree_file("../source/files/btree.ind", 3, 4); 
+    hash_file = load_hashtable("../source/files/hash.ind");
+    if (hash_file == NULL)
+        hash_file = create_hashtable("../source/files/hash.ind", 13, 4, 2); 
 
     test_file = fopen("../source/files/insere.bin", "r+");
     test_file_indicator = fopen("../source/files/insere.aux", "r+");
@@ -123,10 +123,10 @@ void menu_function_options(FILE* file, int* tail, char* filename)
                     memcpy(code, register1, 4);
                     memcpy(code2, register1, 4);
 
-                    if (search_key(btree_file, code) == -1)
+                    if (search_key_in_hash(hash_file, code) == -1)
                     {
                         db_pos = insert_in_file(file, register1, size_of_reg);
-                        insert_btree(btree_file, register1, db_pos);
+                        insert_key_in_hash(hash_file, register1, db_pos);
                         printf("\nFoi Inserido com sucesso a chave %s", code2);
                     }
                     else
@@ -137,10 +137,10 @@ void menu_function_options(FILE* file, int* tail, char* filename)
                     register1 = read_test_file(test_file, test_file_indicator, &size_of_reg);
                     memcpy(code, register1, 4);
                     memcpy(code2, register1, 4);
-                    if (search_key(btree_file, code) == -1)
+                    if (search_key_in_hash(hash_file, code) == -1)
                     {
                         db_pos = insert_in_file(file, register1, size_of_reg);
-                        insert_btree(btree_file, register1, db_pos);
+                        insert_key_in_hash(hash_file, register1, db_pos);
                         printf("\nFoi Inserido com sucesso a chave %s", code2);
                     }
                     else
@@ -163,15 +163,15 @@ void menu_function_options(FILE* file, int* tail, char* filename)
                 scanf("%d", &secundary_option);
                 switch (secundary_option)
                 {
-                case 1:
+                /*case 1:
                     printf("\nDigite a posicao: ");
                     scanf("%d", &pos);
                     remove_register(file, tail, pos);
-                    break;
+                    break;*/
 
                 case 2:
                     user_code_input(code);
-                    rmv_reg_by_code(file, tail, code);
+                    delete_key_in_hash(file, code);
                     break;
                 
                 default:
@@ -180,7 +180,7 @@ void menu_function_options(FILE* file, int* tail, char* filename)
 
                 break;
             case 3:
-                printf("Opcao 3.\n");   //
+                printf("Opcao 3.\n");   
                 printf("\n+ - - - - - - - Opcoes de Busca - - - - - - - +\n\n");
                 printf("     1) Busca por Posicao\n");
                 printf("     2) Busca por Codigo do segurado\n");
@@ -206,13 +206,14 @@ void menu_function_options(FILE* file, int* tail, char* filename)
                     register1 = malloc(sizeof(char) * size_of_reg);
                     fread(register1, sizeof(char), size_of_reg, file);*/
   
-                    read_reg_by_key(file, btree_file, code, &register1, &size_of_reg);
+                    pos = search_key_in_hash(hash_file, code);
+
                     print_any_register(register1, size_of_reg);  
                     break;
 
-                case 3:
-                    print_all_reg(file, btree_file);
-                    break;
+            /* case 3:
+                    print_all_reg(file, hash_file);
+                    break;*/
                     
                 default:
                     break;
