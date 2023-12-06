@@ -3,7 +3,7 @@
 
 bool insert_key_in_hash(FILE* fp, char* key, int db_pos)
 {
-    int i;
+    int i, count = 1;
     int hash_pos;
     int current_pos;
 
@@ -34,6 +34,7 @@ bool insert_key_in_hash(FILE* fp, char* key, int db_pos)
                 save_bucket(fp, b, current_pos);
                 free_bucket(b);
 
+                printf("chave %s inserida com sucesso\n");
                 return true;
             }
             /* Caso não tivesse a checagem antes seria necessário
@@ -45,6 +46,8 @@ bool insert_key_in_hash(FILE* fp, char* key, int db_pos)
 
         /*Setor ocupado vamos pro próximo*/
         /*"Overflow Progressivo"*/
+        printf("Colisao\nTentativa %d\n", count);
+        count++;
         current_pos = (current_pos + 1) % table_size;
         
     } while (current_pos != hash_pos);

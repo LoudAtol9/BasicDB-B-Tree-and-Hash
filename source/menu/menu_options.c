@@ -191,11 +191,11 @@ void menu_function_options(FILE* file, int* tail, char* filename)
                 switch (secundary_option)
                 {
                 case 1:
-                    printf("Digite a posicao: ");
+                    /*printf("Digite a posicao: ");
                     scanf("%d", &pos);
                     read_reg_by_pos(file, pos, &register1, &size_of_reg);
                     print_any_register(register1, size_of_reg);  
-                    break;
+                    break;*/
 
                 case 2:
                     user_code_input(code);
@@ -206,8 +206,7 @@ void menu_function_options(FILE* file, int* tail, char* filename)
                     register1 = malloc(sizeof(char) * size_of_reg);
                     fread(register1, sizeof(char), size_of_reg, file);*/
   
-                    pos = search_key_in_hash(hash_file, code);
-
+                    read_reg_by_key_hash(file, hash_file, code, register1, size_of_reg);
                     print_any_register(register1, size_of_reg);  
                     break;
 
