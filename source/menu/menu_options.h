@@ -18,6 +18,11 @@
 #include "../b-trees/busca_indice.h"
 #include "../b-trees/insere_key.h"
 
+#include "../hash/busca_hash.h"
+#include "../hash/hash_io.h"
+#include "../hash/insere_hash.h"
+#include "../hash/remove_hash.h"
+
 #include "../load-files/carrega_testes.h"
 
 #include "../utils/string_utils.h"

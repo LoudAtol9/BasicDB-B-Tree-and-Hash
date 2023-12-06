@@ -52,5 +52,6 @@ int calc_hash(char* key)
     uint32_t num;
     num = atoi(key);
 
+    printf("endereco %d\n", num%table_size);
     return num % table_size;
 }

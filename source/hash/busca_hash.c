@@ -34,6 +34,7 @@ int search_key_in_hash(FILE* fp, char* key)
             else if (b->keys[i * key_size] == EMPTY_SPACE)
             {
                 free_bucket(b);
+                printf("chave %s nao encontrada\n", key);
                 return NIL;
             }     
         }
