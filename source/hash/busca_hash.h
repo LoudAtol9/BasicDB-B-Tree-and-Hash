@@ -14,4 +14,6 @@
 
 int search_key_in_hash(FILE* fp, char* key);
 
+void read_reg_by_key_hash(FILE* fp, FILE* hash_file, char* key, char** reg, int* size);
+
 #endif /*BUSCA_HASH_H*/

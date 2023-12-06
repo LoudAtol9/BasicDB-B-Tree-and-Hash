@@ -48,3 +48,17 @@ int search_key_in_hash(FILE* fp, char* key)
     free_bucket(b);
     return NIL;
 }
+
+
+void read_reg_by_key_hash(FILE* fp, FILE* hash_file, char* key, char** reg, int* size)
+{
+    int file_pos;
+
+    file_pos = search_key_in_hash(hash_file, key);
+
+    fseek(fp, file_pos + sizeof(char), SEEK_SET);
+    fread(size, sizeof(int), 1, fp);
+
+    *reg = (char*) malloc(sizeof(char) * (*size));
+    fread(*reg, sizeof(char), *size, fp);
+}
